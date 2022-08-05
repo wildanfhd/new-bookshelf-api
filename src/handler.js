@@ -82,23 +82,28 @@ const saveBookHandler = (request, h) => {
   return response;
 };
 
-const getAllBooksHandler = (h) => {
-  const { id, name, publisher } = request.payload;
+const getAllBooksHandler = (request, h) => {
+  const listOfBooks = books.map((book) => ({
+    id: book.id,
+    name: book.name,
+    publisher: book.publisher,
+  }));
 
-  if (books.length !== 0) {
+  if (books.length === 0) {
     const response = h.response({
       status: "success",
       data: {
-        books,
+        books: [],
       },
     });
+    response.code(200);
+    return response;
   }
 
-  // Jika belum ada buku yang dimasukkan, server akan merespon dengan array kosong
   const response = h.response({
-    status: "fail",
+    status: "success",
     data: {
-      books,
+      books: listOfBooks,
     },
   });
   response.code(200);
