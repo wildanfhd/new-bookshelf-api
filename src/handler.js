@@ -83,12 +83,14 @@ const saveBookHandler = (request, h) => {
 };
 
 const getAllBooksHandler = (request, h) => {
+  // Membuat variabel yang berisi id, name, dan publisher dari buku pada array books
   const listOfBooks = books.map((book) => ({
     id: book.id,
     name: book.name,
     publisher: book.publisher,
   }));
 
+  // Jika panjang dari array sama dengan nol, maka server akan mengembalikan data berupa array books kosong
   if (books.length === 0) {
     const response = h.response({
       status: "success",
@@ -100,6 +102,7 @@ const getAllBooksHandler = (request, h) => {
     return response;
   }
 
+  // Jika tidak masuk ke dalam pengkondisian (books.length === 0), maka server akan mengembalikan data berupa object yang berisi id, name, dan publisher dari masing-masing buku yang ada.
   const response = h.response({
     status: "success",
     data: {
