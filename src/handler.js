@@ -102,7 +102,7 @@ const getAllBooksHandler = (request, h) => {
     return response;
   }
 
-  // Jika tidak masuk ke dalam pengkondisian (books.length === 0), maka server akan mengembalikan data berupa object yang berisi id, name, dan publisher dari masing-masing buku yang ada.
+  // Jika tidak masuk ke dalam pengkondisian (books.length === 0), maka server akan mengembalikan data yaitu listOfBooks yang berupa object yang berisi id, name, dan publisher dari masing-masing buku yang ada.
   const response = h.response({
     status: "success",
     data: {
