@@ -20,6 +20,11 @@ const routes = [
     path: "/books/{bookId}",
     handler: getBookByIdHandler,
   },
+  {
+    method: "PUT",
+    path: "/books/{bookId}",
+    handler: () => {},
+  },
 ];
 
 module.exports = routes;
