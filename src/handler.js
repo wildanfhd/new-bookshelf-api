@@ -135,4 +135,82 @@ const getBookByIdHandler = (request, h) => {
   response.code(200);
   return response;
 };
-module.exports = { saveBookHandler, getAllBooksHandler, getBookByIdHandler };
+
+const editBookByIdHandler = (request, h) => {
+  // Mendapatkan nilai bookId untuk menyesuaikan id buku dengan id yang ada di route parameter
+  const { bookId } = request.params;
+
+  // Mengambil data books terbaru yang dikirimkan oleh client melalui request.payload
+  const {
+    name,
+    year,
+    author,
+    summary,
+    publisher,
+    pageCount,
+    readPage,
+    reading,
+  } = request.payload;
+
+  // Mengecek apakah book memiliki properti name atau tidak
+  if (!name) {
+    const response = h.response({
+      status: "fail",
+      message: "Gagal memperbarui buku. Mohon isi nama buku",
+    });
+    response.code(400);
+    return response;
+  }
+
+  if (readPage > pageCount) {
+    const response = h.response({
+      status: "fail",
+      message:
+        "Gagal memperbarui buku. readPage tidak boleh lebih besar dari pageCount",
+    });
+    response.code(400);
+    return response;
+  }
+
+  // Mendapatkan index array pada objek catatan sesuai id yang ditentukan.
+  // jika note dengan id yang dicari ditemukan,
+  // maka index akan bernilai array index dari objek catatan yang dicari
+  // , jika tidak maka index = -1
+  const index = books.findIndex((buku) => buku.id === bookId);
+
+  if (index !== -1) {
+    books[index] = {
+      ...books[index],
+      name,
+      year,
+      author,
+      summary,
+      publisher,
+      pageCount,
+      readPage,
+      reading,
+    };
+
+    const response = h.response({
+      status: "success",
+      message: "Buku berhasil diperbarui",
+    });
+    response.code(200);
+    return response;
+  }
+
+  // Jika id tidak ditemukan
+  const response = h.response({
+    status: "fail",
+    message: "Gagal memperbarui buku. Id tidak ditemukan",
+  });
+  response.code(404);
+  return response;
+};
+
+module.exports = {
+  saveBookHandler,
+  getAllBooksHandler,
+  getBookByIdHandler,
+  editBookByIdHandler,
+};
