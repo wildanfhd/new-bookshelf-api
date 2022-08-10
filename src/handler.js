@@ -162,6 +162,7 @@ const editBookByIdHandler = (request, h) => {
     return response;
   }
 
+  // Mengecek apakah halaman yang dibaca lebih banyak (lebih besar) dari halaman total
   if (readPage > pageCount) {
     const response = h.response({
       status: "fail",
@@ -199,7 +200,7 @@ const editBookByIdHandler = (request, h) => {
     return response;
   }
 
-  // Jika id tidak ditemukan
+  // Jika id tidak ditemukan maka server akan mengembalikan error 404
   const response = h.response({
     status: "fail",
     message: "Gagal memperbarui buku. Id tidak ditemukan",
