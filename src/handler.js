@@ -137,7 +137,7 @@ const getBookByIdHandler = (request, h) => {
 };
 
 const editBookByIdHandler = (request, h) => {
-  // Mendapatkan nilai bookId untuk menyesuaikan id buku dengan id yang ada di route parameter
+  // Mendapatkan nilai bookId untuk menyesuaikan id buku dengan id yang dikirim melalui path parameter
   const { bookId } = request.params;
 
   // Mengambil data books terbaru yang dikirimkan oleh client melalui request.payload
@@ -209,9 +209,34 @@ const editBookByIdHandler = (request, h) => {
   return response;
 };
 
+const deleteBookByIdHandler = (request, h) => {
+  // Mendapatkan nilai bookId untuk menyesuaikan id buku dengan id yang dikirim melalui path
+  const { bookId } = request.params;
+
+  const index = books.findIndex((buku) => buku.id === bookId);
+
+  if (index !== -1) {
+    books.splice(index, 1);
+    const response = h.response({
+      status: "success",
+      message: "Catatan berhasil dihapus",
+    });
+    response.code(200);
+    return response;
+  }
+
+  const response = h.response({
+    status: "fail",
+    message: "Buku gagal dihapus. Id tidak ditemukan",
+  });
+  response.code(404);
+  return response;
+};
+
 module.exports = {
   saveBookHandler,
   getAllBooksHandler,
   getBookByIdHandler,
   editBookByIdHandler,
+  deleteBookByIdHandler,
 };
