@@ -213,13 +213,15 @@ const deleteBookByIdHandler = (request, h) => {
   // Mendapatkan nilai bookId untuk menyesuaikan id buku dengan id yang dikirim melalui path
   const { bookId } = request.params;
 
-  const index = books.findIndex((buku) => buku.id === bookId);
+  const index = books.findIndex((buku) => {
+    return buku.id === bookId;
+  });
 
   if (index !== -1) {
     books.splice(index, 1);
     const response = h.response({
       status: "success",
-      message: "Catatan berhasil dihapus",
+      message: "Buku berhasil dihapus",
     });
     response.code(200);
     return response;
