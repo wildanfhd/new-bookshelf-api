@@ -83,30 +83,32 @@ const saveBookHandler = (request, h) => {
 };
 
 const getAllBooksHandler = (request, h) => {
-  // Membuat variabel yang berisi id, name, dan publisher dari buku pada array books
-  const listOfBooks = books.map((book) => ({
-    id: book.id,
-    name: book.name,
-    publisher: book.publisher,
-  }));
+  const { name, reading, finished } = request.query;
 
-  // Jika panjang dari array sama dengan nol, maka server akan mengembalikan data berupa array books kosong
-  if (books.length === 0) {
-    const response = h.response({
-      status: "success",
-      data: {
-        books: [],
-      },
-    });
-    response.code(200);
-    return response;
+  let listOfBooks = books;
+
+  if (name) {
+    listOfBooks = books.filter((n) =>
+      n.name.toLowerCase().includes(name.toLowerCase())
+    );
   }
 
-  // Jika tidak masuk ke dalam pengkondisian (books.length === 0), maka server akan mengembalikan data yaitu listOfBooks yang berupa object yang berisi id, name, dan publisher dari masing-masing buku yang ada.
+  if (reading) {
+    listOfBooks = books.filter((n) => n.reading === false);
+  }
+
+  if (finished) {
+    listOfBooks = books.filter((n) => Number(n.finished) === Number(finished));
+  }
+
   const response = h.response({
     status: "success",
     data: {
-      books: listOfBooks,
+      books: listOfBooks.map((buku) => ({
+        id: buku.id,
+        name: buku.name,
+        publisher: buku.publisher,
+      })),
     },
   });
   response.code(200);
