@@ -83,6 +83,7 @@ const saveBookHandler = (request, h) => {
 };
 
 const getAllBooksHandler = (request, h) => {
+  // Mendapatkan query yang diberikan oleh client lewat path parameter
   const { name, reading, finished } = request.query;
 
   let listOfBooks = books;
@@ -116,10 +117,12 @@ const getAllBooksHandler = (request, h) => {
 };
 
 const getBookByIdHandler = (request, h) => {
+  // Mendapatkan nilai bookId untuk menyesuaikan id buku dengan id yang dikirim melalui path parameter
   const { bookId } = request.params;
 
   const book = books.filter((buku) => buku.id === bookId)[0];
 
+  // Jika buku dengan id yang diinput tidak ditemukan maka :
   if (!book) {
     const response = h.response({
       status: "fail",
