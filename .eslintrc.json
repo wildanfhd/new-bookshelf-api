@@ -13,6 +13,9 @@
     "quotes": ["error", "double"],
     "no-trailing-spaces": "off",
     "max-len": "off",
-    "arrow-body-style": 0
+    "arrow-body-style": 0,
+    "implicit-arrow-linebreak": "off",
+    "function-paren-newline": "off",
+    "comma-dangle": "off"
   }
 }
