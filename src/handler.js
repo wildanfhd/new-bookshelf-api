@@ -89,7 +89,7 @@ const getAllBooksHandler = (request, h) => {
   let listOfBooks = books;
 
   if (name) {
-    listOfBooks = books.filter((n) =>
+    listOfBooks = listOfBooks.filter((n) =>
       n.name.toLowerCase().includes(name.toLowerCase())
     );
   }
